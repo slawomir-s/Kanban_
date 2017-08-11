@@ -5,7 +5,7 @@ function Column(id, name) {
         this.$element = createColumn(); 
         
         function createColumn() { 
-            var $column = $('<div>').addClass('column'), 
+            var $column = $('<div data-column-id="' + self.id + '">').addClass('column'), 
                 $columnTitle = $('<h2>').addClass('column-title').text(self.name), 
                 $columnCardList = $('<ul>').addClass('column-card-list'), 
                 $columnDelete = $('<button>').addClass('btn-delete').text('x'), 
@@ -16,8 +16,28 @@ function Column(id, name) {
             });
 
             $columnAddCard.click(function(event) {
-                var cardName = prompt("Enter the name of the card");
+                
+                swal({
+                    title: "Card name",
+                    text: "Enter the name of the card",
+                    type: "input",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    inputPlaceholder: "card name"
+                },
+                
+                function (inputValue) {
+                if (inputValue === false) return false;
+
+                if (inputValue === "") {
+                    swal.showInputError("Your card need a name");
+                    return false
+                }
+
+                cardName = inputValue;
+                
                 event.preventDefault();
+                
                 $.ajax({
                     url: baseUrl + '/card',
                     method: 'POST',
@@ -29,8 +49,10 @@ function Column(id, name) {
                         var card = new Card(response.id, cardName);
                         self.addCard(card);
                     }
-                }); 
+                });
+                swal("OK", "Card " + "'" + inputValue + "'" + " created", "success"); 
             });
+        });    
 
             $column.append($columnTitle) 
                     .append($columnDelete) 

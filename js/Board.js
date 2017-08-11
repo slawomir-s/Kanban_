@@ -10,25 +10,45 @@ var board = {
     function initSortable() {
         $('.column-card-list').sortable({
             connectWith: '.column-card-list',
-            placeholder: 'card-placeholder'
-        }).disableSelection();
-        $('.column-container').sortable({
-            connectWith: '.column-container',
-            placeholder: 'column-placeholder'
+            placeholder: 'card-placeholder',
+            update: function(event, ui) {
+                if (ui.sender) {
+                    $(ui.item).trigger('card:move', {event: event})
+                }
+            }
         }).disableSelection();
     }    
     
     $('.create-column').click(function() { 
-        var name = prompt('Enter a column name');
+        
+        swal({
+            title: "Column name",
+            text: "Enter the column name",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputPlaceholder: "column name",
+        },
+            function (inputValue) {
+                if (inputValue === false) 
+                    return false;
+
+                if (inputValue === "") {
+                    swal.showInputError("Your column need a name");
+                    return false
+                }
+
         $.ajax({
     		url: baseUrl + '/column',
     		method: 'POST',
     		data: {
-                name: name
+                name: inputValue
     		},
     		success: function(response) {
-    			var column = new Column(response.id, name); 
-                board.addColumn(column); 
+    			board.addColumn(new Column(response.id, inputValue)); 
+                swal("OK", "Column " + "'" + inputValue + "'" + " created", "success"); 
             }
-        }); 
+        });
+          
     });
+});

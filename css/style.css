@@ -51,6 +51,7 @@ body {
   padding: 15px;
   border-radius: 5px;
   box-shadow: inset 0px 1px 0px #9e8d84, 0px 3px 0px 0px #322620, 0px 10px 5px #999;
+  cursor: pointer;
 }
 
 .create-column:active {
@@ -70,18 +71,20 @@ body {
   margin: 10px;
   list-style: none;
   position: relative;
-  width: calc(33.33337% - 25px);
+  width: 25vw;
   vertical-align: top;
+  min-height: 30vh;
+  border-radius: 15px;
 }
 
 .column .column-title {
   border-bottom: 2px solid;
-  margin: 15px 15px;
+  margin: 15px;
   padding: 15px;
 }
 
 .column ul {
-  border: 4px solid lightgrey;
+  border: 10px solid lightgrey;
 }
 
 .column ul .card {
@@ -91,6 +94,7 @@ body {
   vertical-align: top;
   padding: 20px;
   margin: 10px;
+  cursor: pointer;
 }
 
 .column .column-card-list {
@@ -109,6 +113,7 @@ body {
   background-color: #A50808;
   color: white;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .column .add-card {
@@ -119,6 +124,17 @@ body {
   position: relative;
   padding: 10px;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.card-placeholder {
+    height: 60px;
+    min-height: 20px;
+    margin-bottom: 5px;
+    display: block;
+    border: 1px solid rgba(153, 153, 153, 0.3);
+    border-radius: 8px;
+    background-color: rgba(153, 153, 153, 0.3);
 }
 
 footer .author {
@@ -188,7 +204,7 @@ footer .author {
   }
 
   .column ul .card {
-    margin: 5px;
+    margin: 10px;
     padding: 15px;
     width: 60%;
     font-size: 0.8em;
